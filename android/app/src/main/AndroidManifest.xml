@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.swipe">
+    package="com.mk.swipe">
     
         <uses-permission android:name="android.permission.INTERNET" />
         
    <application
         android:label="Swipe"
         android:name="${applicationName}"
-        android:icon="@drawable/ic_launcher">
+        android:icon="@drawable/swipe">
         <activity
             android:name=".MainActivity"
             android:exported="true"
