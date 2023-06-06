@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -30,6 +31,27 @@ class _MyHomePageState extends State<MyHomePage> {
             WebView(
               javascriptMode: JavascriptMode.unrestricted,
               initialUrl: 'https://www.swipetelecom.com.ng/login',
+              navigationDelegate: (NavigationRequest request) async{
+                print("object");
+                if(request.url.startsWith("https://api.whatsapp.com/send?phone")){
+                //   List<String> urlSplitted = request.url.split("&text=");
+                //
+                //   String phoneNumber = "08142602528";
+                //   String message = urlSplitted.last.toString().replaceAll("%20",  " ");
+                //   Uri uri = Uri(
+                //     scheme: 'https',
+                //     path: "https://wa.me/$phoneNumber/?text=${Uri.parse(message)}"
+                //   );
+                //   if(await canLaunchUrl(uri)){
+                //     await launchUrl(uri,mode: LaunchMode.externalApplication);
+                //   } else {
+                //     throw "Could not launch WhatsApp";
+                //   }
+                //   // await _launchUrl();
+                  return NavigationDecision.prevent;
+                }
+                return NavigationDecision.navigate;
+              },
               onPageStarted: (url) => setState(
                 () => loadingPercentage = 0,
               ),
@@ -59,5 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+  _launchUrl(String url) async{
+    if(await canLaunchUrl(Uri.parse(url))){
+      await launchUrl(Uri.parse(url),mode: LaunchMode.externalApplication);
+    } else {
+      throw "Could not launch WhatsApp";
+    }
   }
 }
